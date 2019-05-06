@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import ru.otus.bbpax.configuration.LocalDateTimeConverter;
+import ru.otus.bbpax.configuration.converter.LocalDateTimeConverter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;

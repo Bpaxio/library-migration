@@ -23,7 +23,9 @@ public class CommentProcessor implements ItemProcessor<Comment, CommentJPA> {
 
     @Override
     public CommentJPA process(Comment comment) throws Exception {
-        AuthorJPA author = authorRepo.findFirstByContent(comment.getBook().getAuthor())
+        AuthorJPA author = authorRepo.findAllByContent(comment.getBook().getAuthor())
+                .stream()
+                .findFirst()
                 .orElseThrow(Exception::new);
         GenreJPA genre = genreRepo.findFirstByName(comment.getBook().getGenre().getName())
                 .orElseThrow(Exception::new);

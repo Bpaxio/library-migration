@@ -1,4 +1,4 @@
-package ru.otus.bbpax.configuration;
+package ru.otus.bbpax.configuration.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

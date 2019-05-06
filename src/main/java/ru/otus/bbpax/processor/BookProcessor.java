@@ -8,6 +8,7 @@ import ru.otus.bbpax.model.psql.AuthorJPA;
 import ru.otus.bbpax.model.psql.BookJPA;
 import ru.otus.bbpax.model.psql.GenreJPA;
 import ru.otus.bbpax.repository.AuthorRepo;
+import ru.otus.bbpax.repository.BookRepo;
 import ru.otus.bbpax.repository.GenreRepo;
 
 @Component
@@ -16,11 +17,21 @@ public class BookProcessor implements ItemProcessor<Book, BookJPA> {
 
     private final AuthorRepo authorRepo;
     private final GenreRepo genreRepo;
+    private final BookRepo bookRepo;
 
     @Override
     public BookJPA process(Book book) throws Exception {
-        AuthorJPA author = authorRepo.findFirstByContent(book.getAuthor()).orElseThrow(Exception::new);
-        GenreJPA genre = genreRepo.findFirstByName(book.getGenre().getName()).orElseThrow(Exception::new);
+        return bookRepo.findAllByContent(book)
+                .stream()
+                .findFirst()
+                .orElseGet(() -> anotherBook(book));
+    }
+
+    private BookJPA anotherBook(Book book) {
+        AuthorJPA author = authorRepo.findAllByContent(book.getAuthor()).stream()
+                .findFirst().orElse(null);
+        GenreJPA genre = genreRepo.findFirstByName(book.getGenre().getName())
+                .orElseThrow(null);
         BookJPA bookJPA = new BookJPA();
         bookJPA.setAuthor(author);
         bookJPA.setGenre(genre);
