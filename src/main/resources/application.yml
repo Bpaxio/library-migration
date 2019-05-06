@@ -1,8 +1,8 @@
 spring:
   batch:
-    initialize-schema: never
+    initialize-schema: always
   liquibase:
-    change-log: classpath:db/changelog/db.changelog-master.yaml
+    change-log: classpath:psql/changelog/db.changelog-master.yaml
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
